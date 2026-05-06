@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyHub Pro - Achievements</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/achievements.css">
+<link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+<nav class="sidebar">
+    <div class="sidebar-header"><div class="logo"><i class="fas fa-graduation-cap"></i><span>StudyHub Pro</span></div></div>
+    <ul class="sidebar-nav"><li class="nav-item"><a href="Homepage.html" class="nav-link"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+    <li class="nav-item"><a href="pomodoro.html" class="nav-link"><i class="fas fa-clock"></i><span>Focus Timer</span></a></li>
+    <li class="nav-item"><a href="tasks.html" class="nav-link"><i class="fas fa-tasks"></i><span>Task Manager</span></a></li>
+    <li class="nav-item"><a href="analytics.html" class="nav-link"><i class="fas fa-chart-bar"></i><span>Analytics</span></a></li>
+    <li class="nav-item"><a href="ambient.html" class="nav-link"><i class="fas fa-volume-up"></i><span>Ambient Sounds</span></a></li>
+    <li class="nav-item"><a href="notes.html" class="nav-link"><i class="fas fa-sticky-note"></i><span>Quick Notes</span></a></li>
+    <li class="nav-item active"><a href="achievements.html" class="nav-link"><i class="fas fa-trophy"></i><span>Achievements</span></a></li>
+    </ul>
+    <div class="sidebar-footer">
+        <div class="user-profile">
+            <div class="avatar"><i class="fas fa-user"></i></div><div class="user-info">
+                <span class="username">Study Warrior</span><span class="user-level">Level 7</span></div></div></div></nav>
+
+<main class="main-content">
+    <header class="page-header">
+        <h1 class="page-title"><i class="fas fa-trophy" style="color:var(--accent-gold);margin-right:0.5rem;"></i>Achievements</h1>
+        <div style="color:var(--text-secondary);font-size:0.875rem;" id="achievementsUnlockedHeader">0 / 0 unlocked</div>
+    </header>
+
+    <div class="content">
+        <!-- Profile XP Banner -->
+        <div class="profile-banner">
+            <div class="profile-avatar-large">🎓</div>
+            <div class="profile-stats">
+                <div class="profile-name">Student</div>
+                <div class="profile-level">⚡ Level 1 — Beginner</div>
+                <div class="xp-bar-wrap">
+                    <div class="xp-bar"><div class="xp-fill" id="xpFill" style="width:0%;"></div></div>
+                    <span class="xp-text">0 / 500 XP</span>
+                </div>
+                <div class="profile-badges">
+                    <span class="mini-badge">🎯 Keep going!</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Row -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem;">
+            <div class="stat-mini"><div class="stat-mini-value" style="font-size:1.75rem;font-weight:700;color:var(--accent-gold);">0</div><div class="stat-mini-label">Total XP</div></div>
+            <div class="stat-mini"><div class="stat-mini-value" style="font-size:1.75rem;font-weight:700;color:var(--accent-blue);">0</div><div class="stat-mini-label">Unlocked</div></div>
+            <div class="stat-mini"><div class="stat-mini-value" style="font-size:1.75rem;font-weight:700;color:var(--accent-orange);">0</div><div class="stat-mini-label">Day Streak</div></div>
+            <div class="stat-mini"><div class="stat-mini-value" style="font-size:1.75rem;font-weight:700;color:var(--accent-green);">0%</div><div class="stat-mini-label">Completion</div></div>
+        </div>
+
+        <!-- Category Tabs -->
+        <div class="cat-tabs">
+            <button class="cat-tab active" onclick="filterCat('all',this)">All</button>
+            <button class="cat-tab" onclick="filterCat('streak',this)">🔥 Streaks</button>
+            <button class="cat-tab" onclick="filterCat('time',this)">⏰ Time</button>
+            <button class="cat-tab" onclick="filterCat('tasks',this)">✅ Tasks</button>
+            <button class="cat-tab" onclick="filterCat('focus',this)">🧠 Focus</button>
+            <button class="cat-tab" onclick="filterCat('special',this)">⭐ Special</button>
+        </div>
+
+        <!-- Achievements Grid -->
+        <div class="achievements-grid" id="achievementsGrid"></div>
+    </div>
+</main>
+
+<script src="js/auth.js"></script>
+<script src="js/main.js"></script>
+<script src="js/achievements.js"></script>
+</body>
+</html>

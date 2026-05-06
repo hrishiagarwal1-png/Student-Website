@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyHub Pro - Notes</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/notes.css">
+<link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+<nav class="sidebar">
+    <div class="sidebar-header">
+        <div class="logo">
+            <i class="fas fa-graduation-cap"></i>
+            <span>StudyHub Pro</span>
+        </div>
+    </div>
+    <ul class="sidebar-nav">
+        <li class="nav-item"><a href="Homepage.html" class="nav-link"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+        <li class="nav-item"><a href="pomodoro.html" class="nav-link"><i class="fas fa-clock"></i><span>Focus Timer</span></a></li>
+        <li class="nav-item"><a href="tasks.html" class="nav-link"><i class="fas fa-tasks"></i><span>Task Manager</span></a></li>
+        <li class="nav-item"><a href="analytics.html" class="nav-link"><i class="fas fa-chart-bar"></i><span>Analytics</span></a></li>
+        <li class="nav-item"><a href="ambient.html" class="nav-link"><i class="fas fa-volume-up"></i><span>Ambient Sounds</span></a></li>
+        <li class="nav-item active"><a href="notes.html" class="nav-link"><i class="fas fa-sticky-note"></i><span>Quick Notes</span></a></li>
+        <li class="nav-item"><a href="achievements.html" class="nav-link"><i class="fas fa-trophy"></i><span>Achievements</span></a></li>
+    </ul>
+    <div class="sidebar-footer">
+        <div class="user-profile">
+            <div class="avatar"><i class="fas fa-user"></i></div>
+            <div class="user-info">
+                <span class="username">Study Warrior</span>
+                <span class="user-level">Level 7</span>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main class="main-content">
+    <header class="page-header">
+        <h1 class="page-title"><i class="fas fa-sticky-note" style="color:var(--accent-blue);margin-right:0.5rem;"></i>Notes</h1>
+        <div style="display:flex;gap:0.75rem;">
+            <button class="btn btn-primary" onclick="newNote()"><i class="fas fa-plus"></i> New Note</button>
+        </div>
+    </header>
+
+    <div class="notes-layout">
+        <!-- Notes List Sidebar -->
+        <div class="notes-sidebar">
+            <div class="notes-search">
+                <input type="text" id="searchInput" placeholder="🔍 Search notes..." oninput="searchNotes(this.value)">
+            </div>
+            <div class="notes-list" id="notesList"></div>
+        </div>
+
+        <!-- Editor -->
+        <div class="note-editor" id="noteEditor" style="display:none;">
+            <div class="editor-toolbar">
+                <button class="tool-btn" title="Bold" onclick="formatText('bold')"><i class="fas fa-bold"></i></button>
+                <button class="tool-btn" title="Italic" onclick="formatText('italic')"><i class="fas fa-italic"></i></button>
+                <button class="tool-btn" title="Underline" onclick="formatText('underline')"><i class="fas fa-underline"></i></button>
+                <div class="tool-divider"></div>
+                <button class="tool-btn" onclick="insertTemplate('bullet')"><i class="fas fa-list-ul"></i> Bullet</button>
+                <button class="tool-btn" onclick="insertTemplate('code')"><i class="fas fa-code"></i> Code</button>
+                <button class="tool-btn" onclick="insertTemplate('todo')"><i class="fas fa-check-square"></i> Todo</button>
+                <div class="tool-divider"></div>
+                <select class="tag-select" id="tagSelect" onchange="setTag(this.value)">
+                    <option value="">No Tag</option>
+                    <option value="study">📖 Study</option>
+                    <option value="code">💻 Code</option>
+                    <option value="idea">💡 Idea</option>
+                    <option value="important">⭐ Important</option>
+                </select>
+                <div style="margin-left:auto;display:flex;gap:0.5rem;">
+                    <button class="btn btn-secondary" onclick="deleteCurrentNote()"><i class="fas fa-trash"></i></button>
+                    <button class="btn btn-primary" onclick="saveNote()"><i class="fas fa-save"></i> Save</button>
+                </div>
+            </div>
+            <div class="editor-title">
+                <input type="text" id="noteTitleInput" placeholder="Note title..." oninput="autoSave()">
+            </div>
+            <div class="editor-body">
+                <textarea id="noteBodyInput" placeholder="Start writing... (auto-saves as you type)" oninput="autoSave()"></textarea>
+            </div>
+            <div class="editor-footer">
+                <span id="wordCount">0 words</span>
+                <span id="lastSaved">Not saved yet</span>
+            </div>
+        </div>
+
+        <!-- Empty state -->
+        <div class="empty-editor" id="emptyEditor">
+            <i class="fas fa-sticky-note"></i>
+            <p>Select a note or create a new one</p>
+            <small>Your notes auto-save as you type</small>
+        </div>
+    </div>
+</main>
+
+<script src="js/auth.js"></script>
+<script src="js/main.js"></script>
+<script src="js/notes.js"></script>
+</body>
+</html>

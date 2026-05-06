@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyHub Pro - Ambient Sounds</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/ambient.css">
+<link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+<nav class="sidebar">
+    <div class="sidebar-header">
+        <div class="logo"><i class="fas fa-graduation-cap"></i><span>StudyHub Pro</span></div>
+    </div>
+    <ul class="sidebar-nav">
+        <li class="nav-item"><a href="Homepage.html" class="nav-link"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+        <li class="nav-item"><a href="pomodoro.html" class="nav-link"><i class="fas fa-clock"></i><span>Focus Timer</span></a></li>
+        <li class="nav-item"><a href="tasks.html" class="nav-link"><i class="fas fa-tasks"></i><span>Task Manager</span></a></li>
+        <li class="nav-item"><a href="analytics.html" class="nav-link"><i class="fas fa-chart-bar"></i><span>Analytics</span></a></li>
+        <li class="nav-item active"><a href="ambient.html" class="nav-link"><i class="fas fa-volume-up"></i><span>Ambient Sounds</span></a></li>
+        <li class="nav-item"><a href="notes.html" class="nav-link"><i class="fas fa-sticky-note"></i><span>Quick Notes</span></a></li>
+        <li class="nav-item"><a href="achievements.html" class="nav-link"><i class="fas fa-trophy"></i><span>Achievements</span></a></li>
+    </ul>
+    <div class="sidebar-footer">
+        <div class="user-profile">
+            <div class="avatar"><i class="fas fa-user"></i></div>
+            <div class="user-info">
+                <span class="username">Study Warrior</span>
+                <span class="user-level">Level 7</span>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main class="main-content">
+    <header class="page-header">
+        <h1 class="page-title"><i class="fas fa-headphones" style="color:var(--accent-blue);margin-right:0.5rem;"></i>Ambient Sounds</h1>
+        <div class="eq-viz" id="eqViz"></div>
+    </header>
+
+    <div class="content">
+        <!-- Now Playing -->
+        <div class="now-playing">
+            <div class="now-playing-icon" id="npIcon"><i class="fas fa-music"></i></div>
+            <div class="now-playing-info">
+                <div class="now-playing-title" id="npTitle">No sound playing</div>
+                <div class="now-playing-status" id="npStatus">Select a sound or preset to begin</div>
+            </div>
+            <div class="now-playing-controls">
+                <div class="master-volume">
+                    <i class="fas fa-volume-down" style="color:var(--text-tertiary);"></i>
+                    <input type="range" class="volume-slider" id="masterVolume" min="0" max="100" value="70">
+                    <i class="fas fa-volume-up" style="color:var(--text-tertiary);"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Presets -->
+        <div class="section-title">Quick Presets</div>
+        <div class="presets-row">
+            <button class="preset-btn" onclick="loadPreset('deepfocus',this)">🧠 Deep Focus</button>
+            <button class="preset-btn" onclick="loadPreset('cafe',this)">☕ Coffee Shop</button>
+            <button class="preset-btn" onclick="loadPreset('night',this)">🌙 Late Night</button>
+            <button class="preset-btn" onclick="loadPreset('nature',this)">🌿 Nature Zen</button>
+            <button class="preset-btn" onclick="clearAll()">✖ Clear All</button>
+        </div>
+
+        <!-- Nature Sounds -->
+        <div class="section-title">Nature</div>
+        <div class="sounds-grid" id="natureSounds"></div>
+
+        <!-- Urban Sounds -->
+        <div class="section-title">Urban</div>
+        <div class="sounds-grid" id="urbanSounds"></div>
+
+        <!-- Focus Sounds -->
+        <div class="section-title">Focus</div>
+        <div class="sounds-grid" id="focusSounds"></div>
+
+        <!-- Timer integration -->
+        <div class="timer-integration">
+            <div class="timer-int-info">
+                <h3><i class="fas fa-clock" style="color:var(--accent-blue);margin-right:0.5rem;"></i>Auto-stop with Timer</h3>
+                <p>Automatically stop sounds when your focus session ends</p>
+            </div>
+            <div class="toggle-switch" id="timerToggle" onclick="toggleTimerSync()"></div>
+        </div>
+    </div>
+</main>
+
+<script src="js/auth.js"></script>
+<script src="js/main.js"></script>
+<script src="js/ambient.js"></script>
+</body>
+</html>

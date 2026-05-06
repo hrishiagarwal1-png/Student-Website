@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyHub Pro - Analytics</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/analytics.css">
+<link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+<nav class="sidebar">
+    <div class="sidebar-header">
+        <div class="logo"><i class="fas fa-graduation-cap"></i><span>StudyHub Pro</span></div>
+    </div>
+    <ul class="sidebar-nav">
+        <li class="nav-item"><a href="Homepage.html" class="nav-link"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+        <li class="nav-item"><a href="pomodoro.html" class="nav-link"><i class="fas fa-clock"></i><span>Focus Timer</span></a></li>
+        <li class="nav-item"><a href="tasks.html" class="nav-link"><i class="fas fa-tasks"></i><span>Task Manager</span></a></li>
+        <li class="nav-item active"><a href="analytics.html" class="nav-link"><i class="fas fa-chart-bar"></i><span>Analytics</span></a></li>
+        <li class="nav-item"><a href="ambient.html" class="nav-link"><i class="fas fa-volume-up"></i><span>Ambient Sounds</span></a></li>
+        <li class="nav-item"><a href="notes.html" class="nav-link"><i class="fas fa-sticky-note"></i><span>Quick Notes</span></a></li>
+        <li class="nav-item"><a href="achievements.html" class="nav-link"><i class="fas fa-trophy"></i><span>Achievements</span></a></li>
+    </ul>
+    <div class="sidebar-footer">
+        <div class="user-profile">
+            <div class="avatar"><i class="fas fa-user"></i></div>
+            <div class="user-info">
+                <span class="username">Study Warrior</span>
+                <span class="user-level">Level 7</span>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main class="main-content">
+    <header class="page-header">
+        <h1 class="page-title"><i class="fas fa-chart-bar" style="color:var(--accent-blue);margin-right:0.5rem;"></i>Analytics</h1>
+        <div class="period-tabs">
+            <button class="period-btn" onclick="setPeriod('week',this)">Week</button>
+            <button class="period-btn active" onclick="setPeriod('month',this)">Month</button>
+            <button class="period-btn" onclick="setPeriod('year',this)">Year</button>
+        </div>
+    </header>
+
+    <div class="content">
+        <div class="summary-grid" id="summaryGrid"></div>
+        <div class="charts-grid">
+            <div class="chart-card">
+                <div class="chart-header"><h2><i class="fas fa-chart-bar" style="color:var(--accent-blue);"></i> Study Hours</h2></div>
+                <div class="chart-body">
+                    <div class="bar-chart" id="barChart"></div>
+                    <div class="chart-legend" id="chartLegend">
+                        <div class="legend-item"><div class="legend-label">This week</div><div class="legend-value" style="color:var(--accent-blue);">0h</div></div>
+                        <div class="legend-item"><div class="legend-label">Sessions</div><div class="legend-value" style="color:var(--text-secondary);">0</div></div>
+                        <div class="legend-item"><div class="legend-label">Avg/day</div><div class="legend-value" style="color:var(--accent-green);">0h</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-header"><h2><i class="fas fa-chart-pie" style="color:var(--accent-purple);"></i> Study Summary</h2></div>
+                <div class="chart-body">
+                    <div class="donut-wrap">
+                        <div class="donut"><div class="donut-center"><span id="donutTotal">0h</span><small>total</small></div></div>
+                        <div class="donut-legend" id="donutLegend">
+                            <div class="donut-item"><div class="donut-dot"><div class="dot" style="background:var(--accent-blue);"></div>Focus</div><span id="donutFocus" style="color:var(--text-primary);">0h</span></div>
+                            <div class="donut-item"><div class="donut-dot"><div class="dot" style="background:var(--accent-green);"></div>Tasks</div><span id="donutTasks" style="color:var(--text-primary);">0</span></div>
+                            <div class="donut-item"><div class="donut-dot"><div class="dot" style="background:var(--accent-orange);"></div>Streak</div><span id="donutStreak" style="color:var(--text-primary);">0 days</span></div>
+                            <div class="donut-item"><div class="donut-dot"><div class="dot" style="background:var(--accent-purple);"></div>Sessions</div><span id="donutSessions" style="color:var(--text-primary);">0</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="heatmap-card">
+            <div class="chart-header"><h2><i class="fas fa-th" style="color:var(--accent-green);"></i> Study Activity — Last 12 Weeks</h2></div>
+            <div class="heatmap-grid" id="heatmapGrid"></div>
+            <div class="heatmap-labels">
+                <span>12 weeks ago</span>
+                <span>8 weeks ago</span>
+                <span>4 weeks ago</span>
+                <span>Today</span>
+            </div>
+        </div>
+
+        <div class="chart-card" style="margin-top:1.5rem;">
+            <div class="chart-header"><h2><i class="fas fa-fire" style="color:var(--accent-orange);"></i> Streak</h2></div>
+            <div class="chart-body">
+                <div class="streak-display">
+                    <div class="streak-num" id="streakNumber">0</div>
+                    <div class="streak-info">
+                        <h3>Day Streak 🔥</h3>
+                        <p id="streakMessage">Start studying to build your streak!</p>
+                        <p style="margin-top:0.5rem;color:var(--text-tertiary);font-size:0.875rem;" id="streakLongest"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="js/auth.js"></script>
+<script src="js/main.js"></script>
+<script src="js/analytics.js"></script>
+</body>
+</html>

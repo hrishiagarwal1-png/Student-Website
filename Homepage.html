@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyHub Pro - Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+
+</head>
+
+<body>
+    <!-- Navigation Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>StudyHub Pro</span>
+            </div>
+        </div>
+
+        <ul class="sidebar-nav">
+            <li class="nav-item active">
+                <a href="Homepage.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="pomodoro.html" class="nav-link">
+                    <i class="fas fa-clock"></i>
+                    <span>Focus Timer</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="tasks.html" class="nav-link">
+                    <i class="fas fa-tasks"></i>
+                    <span>Task Manager</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="analytics.html" class="nav-link">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Analytics</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="ambient.html" class="nav-link">
+                    <i class="fas fa-volume-up"></i>
+                    <span>Ambient Sounds</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="notes.html" class="nav-link">
+                    <i class="fas fa-sticky-note"></i>
+                    <span>Quick Notes</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="achievements.html" class="nav-link">
+                    <i class="fas fa-trophy"></i>
+                    <span>Achievements</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-info">
+                    <span class="username">Study Warrior</span>
+                    <span class="user-level">Level 7</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="page-header">
+            <div class="header-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="page-title">Dashboard</h1>
+            </div>
+            <div class="header-right">
+                <div class="header-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-fire" style="color: var(--accent-orange);"></i>
+                        <span id="streakCounter">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-clock" style="color: var(--accent-blue);"></i>
+                        <span id="todayTime">0m</span>
+                    </div>
+                </div>
+                <div class="current-time" id="currentTime"></div>
+                <button class="settings-btn">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-container">
+            <!-- Quick Stats Row -->
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon accent-blue">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalStudyTime">0m</h3>
+                        <p>Total Study Time</p>
+                        <div class="stat-trend neutral" id="trendStudyTime">
+                            <i class="fas fa-minus"></i>
+                            <span>—</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon accent-green">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="completedTasks">0</h3>
+                        <p>Tasks Completed</p>
+                        <div class="stat-trend neutral" id="trendTasks">
+                            <i class="fas fa-minus"></i>
+                            <span>—</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon accent-orange">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="studyStreak">0</h3>
+                        <p>Day Streak</p>
+                        <div class="stat-trend neutral">
+                            <i class="fas fa-minus"></i>
+                            <span>Keep it up!</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon accent-purple">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="achievementCount">0</h3>
+                        <p>Achievements</p>
+                        <div class="stat-trend neutral" id="trendAchievements">
+                            <i class="fas fa-minus"></i>
+                            <span>—</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Main Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Today's Progress -->
+                <section class="dashboard-card progress-card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-calendar-day"></i> Today's Progress</h2>
+                    </div>
+                    <div class="card-content">
+                        <div class="progress-item">
+                            <div class="progress-info">
+                                <span class="progress-label">Daily Goal</span>
+                                <span class="progress-value" id="dailyProgress">0/0 complete</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill accent-blue" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="progress-item">
+                            <div class="progress-info">
+                                <span class="progress-label">Pomodoros</span>
+                                <span class="progress-value" id="pomodoroProgress">0/0 complete</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill accent-green" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="progress-item">
+                            <div class="progress-info">
+                                <span class="progress-label">Tasks</span>
+                                <span class="progress-value" id="taskProgress">0/0 tasks</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill accent-orange" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+
+                <!-- Study Analytics Preview -->
+                <section class="dashboard-card analytics-card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-chart-line"></i> This Week</h2>
+                        <a href="analytics.html" class="view-all-link">Detailed Analytics</a>
+                    </div>
+                    <div class="card-content">
+                        <div class="mini-chart">
+                            <div class="chart-bars" id="homepageWeeklyChart"></div>
+                        </div>
+                        <div class="weekly-summary">
+                            <div class="summary-item">
+                                <span class="summary-label">Average Daily</span>
+                                <span class="summary-value" id="homeAvgDaily" style="color: var(--accent-blue);">0h</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Best Day</span>
+                                <span class="summary-value" id="homeBestDay" style="color: var(--accent-green);">—</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Recent Achievements -->
+                <section class="dashboard-card achievements-card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-trophy"></i> Recent Achievements</h2>
+                        <a href="achievements.html" class="view-all-link">View All</a>
+                    </div>
+                    <div class="card-content">
+                        <div class="achievement-list" id="homeRecentAchievements">
+                            <div class="achievement-item">
+                                <div class="achievement-icon accent-gold">
+                                    <i class="fas fa-trophy"></i>
+                                </div>
+                                <div class="achievement-info">
+                                    <h4>No achievements yet</h4>
+                                    <p>Start studying to unlock achievements</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+    <script src="js/auth.js"></script>
+    <script src="js/script.js"></script>
+
+
+</body>
+
+</html>

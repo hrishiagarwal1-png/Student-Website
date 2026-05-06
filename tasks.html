@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyHub Pro - Task Manager</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+    <!-- Sidebar (copied exactly from homepage) -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>StudyHub Pro</span>
+            </div>
+        </div>
+
+        <ul class="sidebar-nav">
+            <li class="nav-item">
+                <a href="Homepage.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="pomodoro.html" class="nav-link">
+                    <i class="fas fa-clock"></i>
+                    <span>Focus Timer</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a href="tasks.html" class="nav-link">
+                    <i class="fas fa-tasks"></i>
+                    <span>Task Manager</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="analytics.html" class="nav-link">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Analytics</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="ambient.html" class="nav-link">
+                    <i class="fas fa-volume-up"></i>
+                    <span>Ambient Sounds</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="notes.html" class="nav-link">
+                    <i class="fas fa-sticky-note"></i>
+                    <span>Quick Notes</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="achievements.html" class="nav-link">
+                    <i class="fas fa-trophy"></i>
+                    <span>Achievements</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-info">
+                    <span class="username">Study Warrior</span>
+                    <span class="user-level">Level 7</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header (copied exactly from homepage) -->
+        <header class="page-header">
+            <div class="header-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="page-title">Task Manager</h1>
+            </div>
+            <div class="header-right">
+                <div class="header-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-fire" style="color: var(--accent-orange);"></i>
+                        <span id="streakCounter">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-clock" style="color: var(--accent-blue);"></i>
+                        <span id="todayTime">0h</span>
+                    </div>
+                </div>
+                <div class="current-time" id="currentTime"></div>
+                <button id="enableNotificationsBtn" class="btn btn-secondary" title="Enable Notifications" style="margin-right: 10px;">
+                    <i class="fas fa-bell"></i> Enable Notifications
+                </button>
+                <button class="settings-btn">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Page-specific content -->
+        <div class="dashboard-container">
+            <!-- TODO LIST SECTION -->
+            <div class="todo-container">
+                <section class="dashboard-card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-list-check"></i> My Tasks</h2>
+                    </div>
+                    <div class="card-content">
+                        <div class="quick-add-task">
+                            <input type="text" id="taskInput" placeholder="Add a new task...">
+                            <button class="btn btn-primary" id="addTaskBtn">
+                                <i class="fas fa-plus"></i> Add Task
+                            </button>
+                        </div>
+                        <!-- Insert this immediately AFTER <div class="quick-add-task">...</div> -->
+                        <div id="schedulerDropdown" class="scheduler-dropdown" style="display: none;">
+                            <div class="scheduler-header">
+                                <h4>Schedule Task</h4>
+                                <button class="scheduler-close" id="closeSchedulerBtn" title="Close">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="scheduler-body">
+                                <div class="scheduler-field">
+                                    <label for="scheduleDate">Date</label>
+                                    <input type="date" id="scheduleDate" class="scheduler-input">
+                                </div>
+                                
+                                <div class="scheduler-field">
+                                    <label>Time</label>
+                                    <div class="time-picker-group">
+                                        <select id="scheduleHour" class="scheduler-input time-select"></select>
+                                        <span>:</span>
+                                        <select id="scheduleMinute" class="scheduler-input time-select"></select>
+                                        <select id="scheduleAmPm" class="scheduler-input time-select">
+                                            <option value="AM">AM</option>
+                                            <option value="PM">PM</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="scheduler-field" style="width: 100%;">
+                                    <label for="schedulePomodoros">Pomodoro Sessions (Optional)</label>
+                                    <input type="number" id="schedulePomodoros" class="scheduler-input" min="1" max="10" value="1">
+                                </div>
+                            </div>
+
+                            <div class="scheduler-footer">
+                                <button class="btn btn-primary schedule-btn" id="confirmScheduleBtn">
+                                    <i class="fas fa-calendar-check"></i> Schedule Session
+                                </button>
+                            </div>
+                        </div>
+                        <div class="task-list" id="taskList">
+                            <!-- Tasks rendered by JS -->
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- WEEKLY BAR GRAPH SECTION -->
+            <div class="graph-container">
+                <section class="dashboard-card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-chart-bar"></i> Weekly Completed Tasks</h2>
+                    </div>
+                    <div class="card-content">
+                        <div class="mini-chart">
+                            <div class="chart-bars" id="weeklyChart">
+                                <div class="bar" data-day="Mon" style="--bar-height: 0%">
+                                    <div class="bar-value">0</div>
+                                    <div class="bar-label">Mon</div>
+                                </div>
+                                <div class="bar" data-day="Tue" style="--bar-height: 0%">
+                                    <div class="bar-value">0</div>
+                                    <div class="bar-label">Tue</div>
+                                </div>
+                                <div class="bar" data-day="Wed" style="--bar-height: 0%">
+                                    <div class="bar-value">0</div>
+                                    <div class="bar-label">Wed</div>
+                                </div>
+                                <div class="bar" data-day="Thu" style="--bar-height: 0%">
+                                    <div class="bar-value">0</div>
+                                    <div class="bar-label">Thu</div>
+                                </div>
+                                <div class="bar" data-day="Fri" style="--bar-height: 0%">
+                                    <div class="bar-value">0</div>
+                                    <div class="bar-label">Fri</div>
+                                </div>
+                                <div class="bar" data-day="Sat" style="--bar-height: 0%">
+                                    <div class="bar-value">0</div>
+                                    <div class="bar-label">Sat</div>
+                                </div>
+                                <div class="bar" data-day="Sun" style="--bar-height: 0%">
+                                    <div class="bar-value">0</div>
+                                    <div class="bar-label">Sun</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="weekly-summary">
+                            <div class="summary-item">
+                                <span class="summary-label">This Week Total</span>
+                                <span class="summary-value" id="weeklyTotal" style="color: var(--accent-blue);">0</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Best Day</span>
+                                <span class="summary-value" id="bestDay" style="color: var(--accent-green);">—</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- ACHIEVEMENT PROGRESS SECTION -->
+            <div class="achievement-container">
+                <section class="dashboard-card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-trophy"></i> Achievement Progress</h2>
+                    </div>
+                    <div class="card-content">
+                        <div class="achievement-list">
+                            <div class="achievement-item" id="currentAchievement">
+                                <div class="achievement-icon accent-gold">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="achievement-info">
+                                    <h4 id="achievementTitle">Focus Master</h4>
+                                    <p id="achievementDesc">Complete 10 tasks to unlock</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="progress-item" style="margin-top: 1.5rem;">
+                            <div class="progress-info">
+                                <span class="progress-label" id="achievementProgressLabel">0 / 10 tasks completed</span>
+                                <span class="progress-value" id="achievementRemaining">10 remaining</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill accent-gold" id="achievementFill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script>
+        // ===== Task Manager Page Logic =====
+        const TASKS_KEY = 'tasks';
+        const WEEKLY_KEY = 'weeklyCompletedTasks';
+        let currentSchedulingTaskId = null;
+
+        const ACHIEVEMENTS = [
+            { goal: 5,  title: 'Getting Started', icon: 'fa-seedling' },
+            { goal: 10, title: 'Focus Master', icon: 'fa-star' },
+            { goal: 25, title: 'Task Warrior', icon: 'fa-shield-halved' },
+            { goal: 50, title: 'Productivity Pro', icon: 'fa-rocket' },
+            { goal: 100, title: 'Unstoppable', icon: 'fa-crown' },
+        ];
+
+        // --- Init ---
+        document.addEventListener('DOMContentLoaded', function () {
+            initClock();
+            initSidebar();
+            renderTasks();
+            renderWeeklyChart();
+            renderAchievement();
+
+            document.getElementById('addTaskBtn').addEventListener('click', addTask);
+            document.getElementById('taskInput').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') addTask();
+            });
+            document.getElementById('closeSchedulerBtn').addEventListener('click', closeScheduler);
+            document.getElementById('confirmScheduleBtn').addEventListener('click', confirmSchedule);
+            
+            const notifyBtn = document.getElementById('enableNotificationsBtn');
+            if (notifyBtn) {
+                notifyBtn.addEventListener('click', requestNotificationPermission);
+            }
+
+            // Set an interval to check scheduled times every 30 seconds
+            setInterval(checkScheduledTasks, 30000);
+            
+            // Run once immediately on load
+            checkScheduledTasks();
+
+            // Re-render when user changes (login/switch)
+            window.addEventListener('userChanged', function () {
+                renderTasks();
+                renderWeeklyChart();
+                renderAchievement();
+            });
+        });
+
+        // --- Notification System ---
+        function requestNotificationPermission() {
+            if (!("Notification" in window)) {
+                console.warn("This browser does not support desktop notifications.");
+                return;
+            }
+            
+            Notification.requestPermission().then(function(permission) {
+                if (permission === "granted") {
+                    console.log("Notification permission granted.");
+                    const btn = document.getElementById('enableNotificationsBtn');
+                    if(btn) {
+                        btn.style.color = "var(--accent-green)";
+                        btn.innerHTML = '<i class="fas fa-bell"></i> Notifications On';
+                    }
+                }
+            });
+        }
+
+        function parseScheduledTime(dateStr, timeStr) {
+            if (!dateStr || !timeStr) return null;
+            
+            const parts = timeStr.split(' ');
+            if (parts.length !== 2) return null;
+            
+            const time = parts[0];
+            const period = parts[1];
+            let [hours, minutes] = time.split(':');
+            
+            hours = parseInt(hours, 10);
+            minutes = parseInt(minutes, 10);
+            
+            if (period === 'PM' && hours < 12) hours += 12;
+            if (period === 'AM' && hours === 12) hours = 0;
+            
+            const dateParts = dateStr.split('-');
+            const year = parseInt(dateParts[0], 10);
+            const month = parseInt(dateParts[1], 10) - 1; // 0-indexed
+            const day = parseInt(dateParts[2], 10);
+            
+            return new Date(year, month, day, hours, minutes, 0, 0);
+        }
+
+        function checkScheduledTasks() {
+            if (Notification.permission !== "granted") {
+                // If not granted, optionally log a warning or check again if default
+                if (Notification.permission === "default") {
+                    console.log("Notification permission not yet requested or granted.");
+                }
+                return;
+            }
+            
+            const tasks = getTasks();
+            let tasksUpdated = false;
+            const now = new Date();
+            
+            for (let i = 0; i < tasks.length; i++) {
+                const task = tasks[i];
+                
+                if (task.notified || task.completed || !task.scheduledDate || !task.scheduledTime) continue;
+                
+                const scheduledDateTime = parseScheduledTime(task.scheduledDate, task.scheduledTime);
+                if (!scheduledDateTime) continue;
+                
+                if (now >= scheduledDateTime) {
+                    new Notification("Session Reminder", {
+                        body: "Time to start: " + task.task,
+                    });
+                    
+                    task.notified = true;
+                    tasksUpdated = true;
+                }
+            }
+            
+            if (tasksUpdated) {
+                saveTasks(tasks);
+            }
+        }
+
+        // --- Clock ---
+        function initClock() {
+            function tick() {
+                const now = new Date();
+                const el = document.getElementById('currentTime');
+                if (el) el.textContent = now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+            }
+            tick();
+            setInterval(tick, 1000);
+        }
+
+        // --- Sidebar ---
+        function initSidebar() {
+            document.getElementById('sidebarToggle').addEventListener('click', function () {
+                document.getElementById('sidebar').classList.toggle('open');
+            });
+            document.querySelectorAll('.nav-link').forEach(function (link) {
+                link.addEventListener('click', function (e) {
+                    var href = this.getAttribute('href');
+                    if (!href || href === '#' || href.startsWith('#')) e.preventDefault();
+                    document.querySelectorAll('.nav-item').forEach(function (i) { i.classList.remove('active'); });
+                    this.parentElement.classList.add('active');
+                });
+            });
+        }
+
+        // --- localStorage helpers (per-user via appData) ---
+        function getTasks() {
+            var user = getCurrentUser();
+            if (!user) return [];
+            return Array.isArray(user.tasks) ? user.tasks : [];
+        }
+        function saveTasks(tasks) {
+            var user = getCurrentUser();
+            if (!user) return;
+            user.tasks = tasks;
+            saveData();
+        }
+
+        function getWeeklyData() {
+            var user = getCurrentUser();
+            if (!user) return {};
+            return (user.weeklyCompletedTasks && typeof user.weeklyCompletedTasks === 'object') ? user.weeklyCompletedTasks : {};
+        }
+        function saveWeeklyData(data) {
+            var user = getCurrentUser();
+            if (!user) return;
+            user.weeklyCompletedTasks = data;
+            saveData();
+        }
+
+        function getTodayKey() {
+            var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            return days[new Date().getDay()];
+        }
+
+        // --- Add Task ---
+        function addTask() {
+            var input = document.getElementById('taskInput');
+            var name = input.value.trim();
+            if (!name) return;
+
+            var now = new Date();
+            var dateStr = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+
+            var task = {
+                id: Date.now(),
+                task: name,
+                completed: false,
+                sessionsPlanned: 0,
+                sessionsCompleted: 0,
+                date: dateStr,
+                scheduledDate: null,
+                scheduledTime: null
+            };
+
+            var tasks = getTasks();
+            tasks.push(task);
+            saveTasks(tasks);
+            input.value = '';
+
+            renderTasks();
+            renderAchievement();
+
+            // Open scheduler dropdown for the newly added task
+            openScheduler(task.id);
+        }
+
+        // --- Scheduler UI Logic ---
+        function openScheduler(taskId) {
+            currentSchedulingTaskId = taskId;
+            const dropdown = document.getElementById('schedulerDropdown');
+            const dateInput = document.getElementById('scheduleDate');
+            const hourSelect = document.getElementById('scheduleHour');
+            const minuteSelect = document.getElementById('scheduleMinute');
+
+            // Exact logic from instructions
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, "0");
+            const dd = String(today.getDate()).padStart(2, "0");
+            const formatted = `${yyyy}-${mm}-${dd}`;
+
+            dateInput.value = formatted;
+            dateInput.min = formatted;
+
+            // Generate 1-12 hours dynamically if empty
+            if (hourSelect.options.length === 0) {
+                for (let i = 1; i <= 12; i++) {
+                    let val = String(i).padStart(2, '0');
+                    hourSelect.add(new Option(val, val));
+                }
+            }
+
+            // Generate 00-59 minutes dynamically if empty
+            if (minuteSelect.options.length === 0) {
+                for (let i = 0; i < 60; i++) {
+                    let val = String(i).padStart(2, '0');
+                    minuteSelect.add(new Option(val, val));
+                }
+            }
+
+            // Show smoothly
+            dropdown.style.display = 'flex';
+        }
+
+        function closeScheduler() {
+            const dropdown = document.getElementById('schedulerDropdown');
+            dropdown.style.display = 'none';
+            currentSchedulingTaskId = null;
+        }
+
+        function confirmSchedule() {
+            if (!currentSchedulingTaskId) return;
+
+            const dateInput = document.getElementById('scheduleDate').value;
+            const hour = document.getElementById('scheduleHour').value;
+            const minute = document.getElementById('scheduleMinute').value;
+            const ampm = document.getElementById('scheduleAmPm').value;
+            const pomodorosInput = document.getElementById('schedulePomodoros').value;
+
+            const timeString = `${hour}:${minute} ${ampm}`;
+            const pomodoros = parseInt(pomodorosInput, 10);
+
+            const tasks = getTasks();
+            const taskIndex = tasks.findIndex(t => t.id === currentSchedulingTaskId);
+            
+            if (taskIndex !== -1) {
+                tasks[taskIndex].scheduledDate = dateInput;
+                tasks[taskIndex].scheduledTime = timeString;
+                tasks[taskIndex].sessionsPlanned = isNaN(pomodoros) ? 0 : pomodoros;
+                saveTasks(tasks);
+                renderTasks(); 
+            }
+
+            closeScheduler();
+        }
+
+        // --- Render Tasks ---
+        function renderTasks() {
+            var tasks = getTasks();
+            var list = document.getElementById('taskList');
+
+            if (tasks.length === 0) {
+                list.innerHTML = '<div class="task-item"><div class="task-content"><span class="task-title">No tasks yet</span><span class="task-meta">Add your first task above</span></div></div>';
+                return;
+            }
+
+            list.innerHTML = tasks.map(function (t) {
+                var sessionInfo = t.sessionsPlanned > 0 ? t.sessionsCompleted + '/' + t.sessionsPlanned + ' sessions completed' : 'No Pomodoro sessions';
+                
+                var scheduleInfo = '';
+                if (t.scheduledDate && t.scheduledTime) {
+                    scheduleInfo = ' • <i class="fas fa-clock"></i> ' + t.scheduledTime;
+                }
+
+                return '<div class="task-item ' + (t.completed ? 'completed' : '') + '" data-id="' + t.id + '">' +
+                    '<div class="task-checkbox" onclick="toggleTask(' + t.id + ')">' +
+                        (t.completed ? '<i class="fas fa-check"></i>' : '') +
+                    '</div>' +
+                    '<div class="task-content">' +
+                        '<span class="task-title">' + t.task + '</span>' +
+                        '<span class="task-meta">' + sessionInfo + scheduleInfo + '</span>' +
+                    '</div>' +
+                    '<button class="btn btn-secondary task-delete-btn" onclick="deleteTask(' + t.id + ')">' +
+                        '<i class="fas fa-trash"></i>' +
+                    '</button>' +
+                '</div>';
+            }).join('');
+        }
+
+        // --- Toggle Task ---
+        function toggleTask(id) {
+            var tasks = getTasks();
+            var task = tasks.find(function (t) { return t.id === id; });
+            if (!task) return;
+
+            task.completed = !task.completed;
+
+            // Update weekly data
+            var weekly = getWeeklyData();
+            var dayKey = getTodayKey();
+            if (!weekly[dayKey]) weekly[dayKey] = 0;
+
+            if (task.completed) {
+                weekly[dayKey]++;
+            } else {
+                weekly[dayKey] = Math.max(0, weekly[dayKey] - 1);
+            }
+
+            saveTasks(tasks);
+            saveWeeklyData(weekly);
+            renderTasks();
+            renderWeeklyChart();
+            renderAchievement();
+        }
+
+        // --- Delete Task ---
+        function deleteTask(id) {
+            var tasks = getTasks().filter(function (t) { return t.id !== id; });
+            saveTasks(tasks);
+            renderTasks();
+            renderAchievement();
+        }
+
+        // --- Weekly Bar Graph ---
+        function renderWeeklyChart() {
+            var weekly = getWeeklyData();
+            var dayOrder = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+            var values = dayOrder.map(function (d) { return weekly[d] || 0; });
+            var max = Math.max.apply(null, values.concat([1])); // at least 1 to avoid divide-by-zero
+
+            var bars = document.querySelectorAll('#weeklyChart .bar');
+            var todayKey = getTodayKey();
+            var totalWeek = 0;
+            var bestVal = 0;
+            var bestName = '—';
+
+            bars.forEach(function (bar, i) {
+                var day = dayOrder[i];
+                var val = values[i];
+                var pct = (val / max) * 100;
+
+                bar.style.setProperty('--bar-height', pct + '%');
+                bar.querySelector('.bar-value').textContent = val;
+
+                // Highlight today
+                if (day === todayKey) {
+                    bar.classList.add('active');
+                } else {
+                    bar.classList.remove('active');
+                }
+
+                totalWeek += val;
+                if (val > bestVal) {
+                    bestVal = val;
+                    bestName = day;
+                }
+            });
+
+            document.getElementById('weeklyTotal').textContent = totalWeek;
+            document.getElementById('bestDay').textContent = bestVal > 0 ? bestName : '—';
+        }
+
+        // --- Achievement Progress ---
+        function renderAchievement() {
+            var tasks = getTasks();
+            var completed = tasks.filter(function (t) { return t.completed; }).length;
+
+            // Find next unlocked achievement
+            var current = ACHIEVEMENTS[ACHIEVEMENTS.length - 1]; // fallback to last
+            for (var i = 0; i < ACHIEVEMENTS.length; i++) {
+                if (completed < ACHIEVEMENTS[i].goal) {
+                    current = ACHIEVEMENTS[i];
+                    break;
+                }
+            }
+
+            var remaining = Math.max(0, current.goal - completed);
+            var pct = Math.min((completed / current.goal) * 100, 100);
+
+            document.getElementById('achievementTitle').textContent = current.title;
+            document.getElementById('achievementDesc').textContent = 'Complete ' + current.goal + ' tasks to unlock';
+            document.getElementById('achievementProgressLabel').textContent = completed + ' / ' + current.goal + ' tasks completed';
+            document.getElementById('achievementRemaining').textContent = remaining + ' remaining';
+            document.getElementById('achievementFill').style.width = pct + '%';
+
+            // Update icon
+            var iconEl = document.querySelector('#currentAchievement .achievement-icon i');
+            if (iconEl) {
+                iconEl.className = 'fas ' + current.icon;
+            }
+
+            // Add glow if close to goal
+            var achEl = document.getElementById('currentAchievement');
+            if (pct >= 80) {
+                achEl.classList.add('new');
+            } else {
+                achEl.classList.remove('new');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyHub Pro - Focus Timer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>StudyHub Pro</span>
+            </div>
+        </div>
+
+        <ul class="sidebar-nav">
+            <li class="nav-item">
+                <a href="Homepage.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a href="pomodoro.html" class="nav-link">
+                    <i class="fas fa-clock"></i>
+                    <span>Focus Timer</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="tasks.html" class="nav-link">
+                    <i class="fas fa-tasks"></i>
+                    <span>Task Manager</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="analytics.html" class="nav-link">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Analytics</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="ambient.html" class="nav-link">
+                    <i class="fas fa-volume-up"></i>
+                    <span>Ambient Sounds</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="notes.html" class="nav-link">
+                    <i class="fas fa-sticky-note"></i>
+                    <span>Quick Notes</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="achievements.html" class="nav-link">
+                    <i class="fas fa-trophy"></i>
+                    <span>Achievements</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-info">
+                    <span class="username">Study Warrior</span>
+                    <span class="user-level">Level 7</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <header class="page-header">
+            <div class="header-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="page-title">Focus Timer</h1>
+            </div>
+            <div class="header-right">
+                <div class="header-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-fire" style="color: var(--accent-orange);"></i>
+                        <span id="streakCounter">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-clock" style="color: var(--accent-blue);"></i>
+                        <span id="todayTime">0h</span>
+                    </div>
+                </div>
+                <div class="current-time" id="currentTime"></div>
+                <button class="settings-btn">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+            <div class="dashboard-grid">
+                <section class="dashboard-card timer-card timer-section">
+                    <div class="card-header">
+                        <h2><i class="fas fa-clock"></i> Main Timer</h2>
+                    </div>
+                    <div class="card-content">
+                        <div class="quick-timer">
+                            <div class="clock-display-container">
+                                <div class="clock-view clock-view--digital active" id="digitalClockView">
+                                    <div class="timer-display" id="quickTimerDisplay">25:00</div>
+                                </div>
+                                <div class="clock-view clock-view--analog" id="analogClockView">
+                                    <div class="analog-clock" id="analogClock">
+                                        <div class="clock-numbers">
+                                            <span class="clock-number" style="--i:1;">1</span>
+                                            <span class="clock-number" style="--i:2;">2</span>
+                                            <span class="clock-number" style="--i:3;">3</span>
+                                            <span class="clock-number" style="--i:4;">4</span>
+                                            <span class="clock-number" style="--i:5;">5</span>
+                                            <span class="clock-number" style="--i:6;">6</span>
+                                            <span class="clock-number" style="--i:7;">7</span>
+                                            <span class="clock-number" style="--i:8;">8</span>
+                                            <span class="clock-number" style="--i:9;">9</span>
+                                            <span class="clock-number" style="--i:10;">10</span>
+                                            <span class="clock-number" style="--i:11;">11</span>
+                                            <span class="clock-number" style="--i:12;">12</span>
+                                        </div>
+                                        <div class="clock-hand clock-hand--minute" id="clockHandMinute"></div>
+                                        <div class="clock-hand clock-hand--second" id="clockHandSecond"></div>
+                                        <div class="clock-center-dot"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clock-toggle" id="clockToggle">
+                                <label class="clock-toggle__label">
+                                    <input type="radio" name="clockType" value="digital" checked>
+                                    <span class="clock-toggle__btn"><i class="fas fa-digital-tachograph"></i> Digital</span>
+                                </label>
+                                <label class="clock-toggle__label">
+                                    <input type="radio" name="clockType" value="analog">
+                                    <span class="clock-toggle__btn"><i class="fas fa-clock"></i> Analog</span>
+                                </label>
+                            </div>
+                            <div class="timer-mode" id="timerMode">Short Session</div>
+                            <div class="timer-controls">
+                                <button class="btn btn-primary" id="quickStartBtn">
+                                    <i class="fas fa-play"></i> Start
+                                </button>
+                                <button class="btn btn-secondary" id="quickResetBtn">
+                                    <i class="fas fa-undo"></i> Reset
+                                </button>
+                            </div>
+                        </div>
+                        <div class="quick-actions">
+                            <button class="quick-action-btn" onclick="setQuickTimer(25)">
+                                <i class="fas fa-stopwatch"></i>
+                                <span>Short Session</span>
+                            </button>
+                            <button class="quick-action-btn" onclick="setQuickTimer(45)">
+                                <i class="fas fa-brain"></i>
+                                <span>Focus Time</span>
+                            </button>
+                            <button class="quick-action-btn" onclick="setQuickTimer(60)">
+                                <i class="fas fa-rocket"></i>
+                                <span>Deep Work</span>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="dashboard-card active-session">
+                    <div class="card-header">
+                        <h2><i class="fas fa-bullseye"></i> Active Session</h2>
+                    </div>
+                    <div class="card-content">
+                        <div class="task-item">
+                            <div class="task-content">
+                                <span class="task-title">Physics - Session 2</span>
+                                <span class="task-meta">Selected from today's sessions</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="dashboard-card session-progress">
+                    <div class="card-header">
+                        <h2><i class="fas fa-chart-line"></i> Live Session Progress</h2>
+                    </div>
+                    <div class="card-content">
+                        <div class="progress-item">
+                            <div class="progress-info">
+                                <span class="progress-label">Physics</span>
+                                <span class="progress-value" id="dailyProgress">2/3 complete</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill accent-blue" style="width: 66%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-info">
+                                <span class="progress-label">Math</span>
+                                <span class="progress-value" id="pomodoroProgress">1/2 complete</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill accent-green" style="width: 50%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-info">
+                                <span class="progress-label">Today Total Progress</span>
+                                <span class="progress-value" id="taskProgress">3/5 complete</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill accent-orange" style="width: 60%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="dashboard-card today-sessions">
+                    <div class="card-header">
+                        <h2><i class="fas fa-list-check"></i> Today's Sessions</h2>
+                    </div>
+                    <div class="card-content">
+                        <div class="task-list" id="recentTasks">
+                            <div class="task-item">
+                                <div class="task-checkbox"></div>
+                                <div class="task-content">
+                                    <span class="task-title">Physics</span>
+                                    <span class="task-meta">2 sessions planned</span>
+                                </div>
+                            </div>
+                            <div class="task-item">
+                                <div class="task-checkbox"></div>
+                                <div class="task-content">
+                                    <span class="task-title">Math</span>
+                                    <span class="task-meta">1 session planned</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="quick-add-task">
+                            <input type="text" id="quickTaskInput" placeholder="Read-only sessions view" readonly>
+                            <button class="btn btn-primary" id="quickAddBtn" disabled>
+                                <i class="fas fa-lock"></i>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="dashboard-card weekly-sessions">
+                    <div class="card-header">
+                        <h2><i class="fas fa-calendar-week"></i> Weekly Sessions Overview</h2>
+                    </div>
+                    <div class="card-content">
+                        <div class="task-list">
+                            <div class="task-item">
+                                <div class="task-content">
+                                    <span class="task-title">Monday</span>
+                                    <span class="task-meta">3 sessions</span>
+                                </div>
+                            </div>
+                            <div class="task-item">
+                                <div class="task-content">
+                                    <span class="task-title">Tuesday</span>
+                                    <span class="task-meta">2 sessions</span>
+                                </div>
+                            </div>
+                            <div class="task-item">
+                                <div class="task-content">
+                                    <span class="task-title">Wednesday</span>
+                                    <span class="task-meta">4 sessions</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="dashboard-card stats">
+                    <div class="card-header">
+                        <h2><i class="fas fa-chart-bar"></i> Stats</h2>
+                    </div>
+                    <div class="card-content">
+                        <div class="weekly-summary">
+                            <div class="summary-item">
+                                <span class="summary-label">Sessions Completed Today</span>
+                                <span class="summary-value" id="completedTasks" style="color: var(--accent-green);">0</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Total Focus Time Today</span>
+                                <span class="summary-value" id="totalStudyTime" style="color: var(--accent-blue);">0m</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+    <!-- Intro Clock Animation Overlay -->
+    <div class="intro-clock-overlay" id="introClockOverlay">
+        <div class="intro-clock">
+            <div class="intro-clock__face">
+                <div class="intro-clock__hand spin-hand-minute"></div>
+                <div class="intro-clock__hand spin-hand-second"></div>
+                <div class="intro-clock__center"></div>
+            </div>
+            <div class="intro-clock__label">Focusing...</div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

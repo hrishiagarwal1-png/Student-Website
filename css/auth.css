@@ -1,0 +1,474 @@
+/* ============================================================
+   auth.css — Authentication UI Styling for StudyHub Pro
+   ============================================================ */
+
+/* ── Auth Gate: Lock body when not logged in ─────────────── */
+body.auth-locked .sidebar,
+body.auth-locked .main-content {
+    filter: blur(6px);
+    pointer-events: none;
+    user-select: none;
+}
+
+/* ── Login / Signup Overlay ──────────────────────────────── */
+.auth-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.auth-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* ── Auth Card ───────────────────────────────────────────── */
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    background: #141414;
+    border: 1px solid #2a2a2a;
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 80px rgba(59, 130, 246, 0.08);
+    transform: translateY(20px) scale(0.96);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+    opacity: 0;
+}
+
+.auth-overlay.active .auth-card {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+/* ── Logo ────────────────────────────────────────────────── */
+.auth-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #3b82f6;
+}
+
+.auth-logo i {
+    font-size: 2rem;
+    animation: authLogoFloat 3s ease-in-out infinite;
+}
+
+@keyframes authLogoFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+/* ── Tabs ────────────────────────────────────────────────── */
+.auth-tabs {
+    display: flex;
+    background: #0a0a0a;
+    border-radius: 10px;
+    padding: 4px;
+    margin-bottom: 1.5rem;
+    border: 1px solid #2a2a2a;
+}
+
+.auth-tab {
+    flex: 1;
+    padding: 0.65rem 1rem;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: #808080;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.auth-tab.active {
+    background: #3b82f6;
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(59, 130, 246, 0.35);
+}
+
+.auth-tab:not(.active):hover {
+    color: #b3b3b3;
+}
+
+/* ── Error Message ───────────────────────────────────────── */
+.auth-error {
+    display: none;
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #ef4444;
+    padding: 0.65rem 1rem;
+    border-radius: 8px;
+    font-size: 0.825rem;
+    margin-bottom: 1rem;
+    animation: authShake 0.4s ease;
+}
+
+@keyframes authShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+}
+
+/* ── Form Fields ─────────────────────────────────────────── */
+.auth-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+}
+
+.auth-field label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #b3b3b3;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.auth-field label i {
+    font-size: 0.75rem;
+    color: #3b82f6;
+}
+
+.auth-field input {
+    padding: 0.75rem 1rem;
+    background: #1e1e1e;
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 0.9rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.auth-field input::placeholder {
+    color: #555;
+}
+
+.auth-field input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* ── Submit Button ───────────────────────────────────────── */
+.auth-submit-btn {
+    width: 100%;
+    padding: 0.85rem 1.5rem;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+}
+
+.auth-submit-btn:hover {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+}
+
+.auth-submit-btn:active {
+    transform: translateY(0);
+}
+
+/* ── Footer ──────────────────────────────────────────────── */
+.auth-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #2a2a2a;
+}
+
+.auth-footer-text {
+    font-size: 0.825rem;
+    color: #808080;
+}
+
+.auth-footer-link {
+    background: none;
+    border: none;
+    color: #3b82f6;
+    font-size: 0.825rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    font-family: inherit;
+}
+
+.auth-footer-link:hover {
+    color: #60a5fa;
+}
+
+/* ── Switch User Modal Overlay ───────────────────────────── */
+.switch-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.switch-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.switch-modal {
+    width: 100%;
+    max-width: 440px;
+    max-height: 80vh;
+    background: #141414;
+    border: 1px solid #2a2a2a;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    transform: translateY(15px) scale(0.97);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.switch-modal-overlay.active .switch-modal {
+    transform: translateY(0) scale(1);
+}
+
+.switch-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid #2a2a2a;
+    background: #0f0f0f;
+}
+
+.switch-modal-header h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.switch-modal-header h3 i {
+    color: #3b82f6;
+}
+
+.switch-modal-close {
+    background: none;
+    border: none;
+    color: #808080;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 0.25rem;
+    transition: color 0.2s ease;
+}
+
+.switch-modal-close:hover {
+    color: #ef4444;
+}
+
+.switch-modal-body {
+    padding: 1rem 1.25rem;
+    overflow-y: auto;
+    max-height: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* ── User List Items ─────────────────────────────────────── */
+.switch-user-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    background: #1e1e1e;
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+    text-align: left;
+    font-family: inherit;
+    color: #fff;
+}
+
+.switch-user-item:hover:not(.current):not(:disabled) {
+    border-color: #3b82f6;
+    background: #1a1a2e;
+}
+
+.switch-user-item.current {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.switch-user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #3b82f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+.switch-user-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.switch-user-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+.switch-user-email {
+    font-size: 0.75rem;
+    color: #808080;
+}
+
+.switch-current-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.12);
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.switch-arrow {
+    color: #555;
+    font-size: 0.8rem;
+}
+
+.switch-empty {
+    text-align: center;
+    color: #808080;
+    padding: 2rem 1rem;
+    font-size: 0.9rem;
+}
+
+/* ── PIN Section in Switch Modal ─────────────────────────── */
+.switch-pin-section {
+    padding: 1rem 1.25rem 1.25rem;
+    border-top: 1px solid #2a2a2a;
+    animation: switchSlideUp 0.3s ease;
+}
+
+@keyframes switchSlideUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.switch-selected-user {
+    color: #b3b3b3;
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.switch-selected-user i {
+    color: #3b82f6;
+}
+
+.switch-selected-user strong {
+    color: #fff;
+}
+
+/* ── Sidebar Auth Buttons ────────────────────────────────── */
+.sidebar-auth-buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid #2a2a2a;
+}
+
+.sidebar-auth-btn {
+    flex: 1;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    background: #1e1e1e;
+    color: #b3b3b3;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    font-family: inherit;
+}
+
+.sidebar-auth-btn:hover {
+    background: #2a2a2a;
+    color: #fff;
+    border-color: #404040;
+}
+
+.sidebar-logout-btn:hover {
+    color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.3);
+    background: rgba(239, 68, 68, 0.08);
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 480px) {
+    .auth-card {
+        margin: 1rem;
+        padding: 2rem 1.25rem;
+    }
+
+    .switch-modal {
+        margin: 1rem;
+    }
+}
